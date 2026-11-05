@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -6,7 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokédex - Módulo 3</title>
+    
+
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+        darkMode: 'class',
+        theme: {
+            extend: {}
+        }
+    }
+    </script>
 
     
 <style>
@@ -107,11 +116,29 @@
 
 </head>
 
-<body class="bg-slate-100 min-h-screen p-6">
+<body class="bg-slate-100 dark:bg-slate-950
+    text-slate-900 dark:text-slate-100
+    min-h-screen
+    transition-colors duration-300">
 
     <main class="max-w-6xl mx-auto">
+        <!-- Botón de Modo Oscuro en la Esquina Superior Derecha -->
+        <button
+            id="btn-dark-mode"
+            class="fixed top-6 right-6 z-40 p-2.5 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 transition shadow-md border border-slate-200 dark:border-slate-700"
+            aria-label="Cambiar modo de color"
+        >
+            <!-- Icono de Luna (Se muestra en modo claro) -->
+            <svg id="icon-moon" class="w-5 h-5 text-slate-700 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+            </svg>
+            <!-- Icono de Sol (Se muestra en modo oscuro) -->
+            <svg id="icon-sun" class="w-5 h-5 text-yellow-400 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m0 13.5V21M4.22 4.22l1.59 1.59m12.38 12.38l1.59 1.59M3 12h2.25m13.5 0H21M4.22 19.78l1.59-1.59M18.18 5.82l1.59-1.59M12 7.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z" />
+            </svg>
+        </button>
 
-        <h1 class="text-3xl font-bold text-center text-slate-800 mb-6">
+        <h1 class="text-3xl font-bold text-center text-slate-800 mb-6 dark:text-white mb-6">
             Pokédex
         </h1>
 
@@ -122,13 +149,22 @@
                 id="buscador"
                 type="text"
                 placeholder="Busca por nombre o numero (Ej. pikachu o 25)"
-                class="flex-1 p-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"
+                class="bg-white dark:bg-slate-800
+                        text-slate-900 dark:text-white
+                        placeholder-slate-400
+                        border border-slate-300 dark:border-slate-600
+                        rounded-lg p-3
+                        focus:outline-none focus:ring-2
+                        focus:ring-blue-500"
             >
 
             <button
                 id="btn-buscar"
-                class="px-4 py-2 bg-yellow-400 font-semibold rounded-lg hover:bg-yellow-500 transition"
-            >
+                class="bg-blue-600 hover:bg-blue-700
+                text-white font-semibold
+                px-5 py-3 rounded-lg
+                transition-colors"
+                        >
                 Buscar
             </button>
 
@@ -146,7 +182,9 @@
         <!-- Mensajes de error -->
         <div
             id="mensaje"
-            class="hidden text-center text-red-600 font-medium my-4 p-3 bg-red-50 rounded-lg max-w-md mx-auto"
+            class="hidden text-center text-red-600 dark:text-red-400
+                    font-medium my-4 p-3 bg-red-50 dark:bg-red-950
+                    rounded-lg max-w-md mx-auto"
         ></div>
 
         <!-- Botón reintentar -->
@@ -183,7 +221,10 @@
 <div id="animacion-captura"
      class="hidden fixed inset-0 z-50 bg-slate-900/70 flex items-center justify-center">
 
-    <div class="bg-white rounded-2xl shadow-2xl p-8 text-center max-w-sm w-full mx-4">
+    <div class="bg-white dark:bg-slate-800
+    text-slate-900 dark:text-white
+    rounded-2xl shadow-2xl p-8 text-center
+    max-w-sm w-full mx-4">
 
         <!-- Pokébola -->
         <div class="flex justify-center mb-6">
@@ -202,7 +243,7 @@
 
         <!-- Mensaje de captura -->
         <h2 id="mensaje-captura"
-            class="text-xl font-bold text-slate-800">
+            class="text-xl font-bold text-slate-800 dark:text-white">
             ¡Pokémon capturado!
         </h2>
 

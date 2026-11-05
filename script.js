@@ -11,6 +11,44 @@ const mensaje = document.getElementById("mensaje");
 const botonReintentar = document.getElementById("btn-reintentar");
 const botonCargarMas = document.getElementById("cargar-mas");
 
+// Seleccionar elementos del DOM para el modo oscuro
+const botonDarkMode = document.getElementById("btn-dark-mode");
+const iconoLuna = document.getElementById("icon-moon");
+const iconoSol = document.getElementById("icon-sun");
+// Recuperar el tema guardado
+let temaOscuro = localStorage.getItem("tema") === "oscuro";
+
+// Función para aplicar el tema
+function aplicarTema() {
+
+    document.documentElement.classList.toggle("dark", temaOscuro);
+
+    // Cambiar visibilidad de los iconos
+    iconoLuna.classList.toggle("hidden", temaOscuro);
+    iconoSol.classList.toggle("hidden", !temaOscuro);
+
+    // Actualizar accesibilidad del botón
+    botonDarkMode.setAttribute(
+        "aria-label",
+        temaOscuro ? "Cambiar a modo claro" : "Cambiar a modo oscuro"
+    );
+}
+
+// Evento para cambiar el tema
+botonDarkMode.addEventListener("click", function() {
+
+    temaOscuro = !temaOscuro;
+
+    localStorage.setItem(
+        "tema",
+        temaOscuro ? "oscuro" : "claro"
+    );
+
+    aplicarTema();
+});
+// Aplicar tema al cargar la página
+aplicarTema();
+
 // VARIABLES PARA ANIMACION DE POKEBOLA
 const animacionCaptura = document.getElementById("animacion-captura");
 const pokebola = document.getElementById("pokebola");
@@ -47,7 +85,10 @@ function crearTarjeta(pokemon, esColeccion = false) {
     const tarjeta = document.createElement("article");
 
     tarjeta.className = `
-        bg-white rounded-2xl shadow-lg p-6 text-center
+        bg-white dark:bg-slate-800
+        text-slate-900 dark:text-white
+        rounded-2xl shadow-lg dark:shadow-black/30
+        p-6 text-center
         transition-all duration-300
         hover:-translate-y-2 hover:shadow-xl
     `;
@@ -65,10 +106,13 @@ function crearTarjeta(pokemon, esColeccion = false) {
             ${pokemon.nombre}
         </h3>
 
-        <div class="flex justify-center gap-2 mt-2">
+        <div class="flex justify-center gap-2 mt-2 bg-slate-100 dark:bg-slate-700
+            text-slate-700 dark:text-slate-200
+            px-3 py-1 rounded-full text-sm">
             ${pokemon.tipos.map(tipo => `
-                <span class="bg-slate-100 text-slate-700 
-                             px-3 py-1 rounded-full text-sm">
+                <span class="bg-slate-100 dark:bg-slate-600
+                            text-slate-700 dark:text-white
+                            px-3 py-1 rounded-full text-sm">
                     ${tipo}
                 </span>
             `).join("")}
@@ -83,7 +127,9 @@ function crearTarjeta(pokemon, esColeccion = false) {
         botonEliminar.textContent = "🗑️ Eliminar";
 
         botonEliminar.className = `
-            w-full mt-4 bg-red-500 hover:bg-red-600
+            w-full mt-4
+            bg-red-500 hover:bg-red-600
+            dark:bg-red-600 dark:hover:bg-red-700
             text-white font-semibold py-2 rounded-lg
             transition-colors duration-300
         `;
@@ -327,12 +373,15 @@ function mostrarResultado(pokemon) {
 
     const statsDiv = document.createElement("div");
 
-    statsDiv.className = "mt-2 text-left text-xs space-y-1 bg-slate-50 p-2 rounded";
+    statsDiv.className = ` mt-2 text-left text-xs space-y-1
+                            bg-slate-50 dark:bg-slate-700
+                            text-slate-800 dark:text-white
+                            p-2 rounded`;
 
     statsDiv.innerHTML = pokemon.stats.map(s => `
         <div class="flex justify-between">
-            <span class="capitalize text-slate-600">${s.nombre}</span>
-            <span class="font-semibold text-slate-800">${s.valor}</span>
+            <span class="capitalize text-slate-600 dark:text-slate-200">${s.nombre}</span>
+            <span class="font-semibold text-slate-800 dark:text-white">${s.valor}</span>
         </div>
     `).join("");
 
